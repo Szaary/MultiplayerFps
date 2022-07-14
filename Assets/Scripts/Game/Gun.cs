@@ -6,8 +6,7 @@ using UnityEngine;
 public class Gun : NetworkBehaviour
 {
     [SerializeField] private Projectile projectile;
-    [SerializeField] private Transform projectileSpawnPoint;
-    
+    [SerializeField] private CameraController cameraController;
     [SerializeField] private float fireCooldown = 0.5f;
     
     
@@ -21,13 +20,18 @@ public class Gun : NetworkBehaviour
 
     private void Update()
     {
+        if (cameraController.cameraTarget != null)
+        {
+            Debug.DrawRay(cameraController.cameraTarget.transform.position, cameraController.cameraTarget.transform.forward, Color.green);
+        }
+ 
         if (!IsOwner) return;
         if (_input.shoot  && _shootTimeoutDelta <= 0.0f)
         {
-            var position = transform.position;
-            position.y = transform.position.y+ 1f;
+            var position = cameraController.cameraTarget.transform.position;
+            var direction = cameraController.cameraTarget.transform.forward;
             
-            ShootServerRpc(position);
+            ShootServerRpc(position, direction);
             _shootTimeoutDelta = fireCooldown;
             _input.shoot = false;
         }
@@ -38,13 +42,13 @@ public class Gun : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void ShootServerRpc(Vector3 position, ServerRpcParams serverRpcParams = default)
+    private void ShootServerRpc(Vector3 position, Vector3 direction, ServerRpcParams serverRpcParams = default)
     {
         var newProjectile = Instantiate(projectile, position, Quaternion.identity);
         
         newProjectile.NetworkObject.SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
         
-        newProjectile.MoveClientRpc(transform.forward);
+        newProjectile.MoveClientRpc(direction);
         newProjectile.StartCoroutine(DestroyAfterTime(newProjectile.NetworkObject));
     }
     

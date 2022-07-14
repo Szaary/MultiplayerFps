@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CameraController : NetworkBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera cameraPrefab;
-    [SerializeField] private Transform cameraTarget;
+    public Transform cameraTarget;
 
     private CinemachineVirtualCamera _camera;
     

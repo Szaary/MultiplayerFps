@@ -18,7 +18,7 @@ public class Projectile : NetworkBehaviour
         canMove = true;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (canMove) transform.Translate(_direction * speed * Time.deltaTime);
     }

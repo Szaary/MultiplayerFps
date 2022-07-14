@@ -459,7 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 5484118082394055432, guid: 75379cc42dc4d4b4e9eba11ec16df9a6,
     type: 3}
-  projectileSpawnPoint: {fileID: 6613924157187125467}
+  cameraController: {fileID: 7449989955282333928}
   fireCooldown: 0.5
 --- !u!114 &4909948852793161928
 MonoBehaviour:
