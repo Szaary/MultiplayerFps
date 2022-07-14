@@ -296,7 +296,7 @@ public class ServerGameNetPortal : MonoBehaviour
         response.Approved = true;
         response.CreatePlayerObject = true;
         response.PlayerPrefabHash = null;
-        response.Position = Vector3.zero;
+        response.Position = new Vector3(0,2,0);
         response.Rotation = Quaternion.identity;
         response.Pending = false;
     }
