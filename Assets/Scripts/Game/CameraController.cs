@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class CameraController : NetworkBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera vsCamera;
+    [SerializeField] private CinemachineVirtualCamera cameraPrefab;
     [SerializeField] private Transform cameraTarget;
 
+    private CinemachineVirtualCamera _camera;
+    
+    
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -40,7 +43,11 @@ public class CameraController : NetworkBehaviour
 
     private void SetCameraForPlayer()
     {
-        var cameraFollower = Instantiate(vsCamera);
-        cameraFollower.Follow = cameraTarget;
+        if (_camera == null)
+        {
+            var cameraFollower = Instantiate(cameraPrefab);
+            cameraFollower.Follow = cameraTarget;
+            _camera = cameraFollower;
+        }
     }
 }

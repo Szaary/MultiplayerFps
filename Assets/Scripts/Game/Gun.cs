@@ -6,6 +6,8 @@ using UnityEngine;
 public class Gun : NetworkBehaviour
 {
     [SerializeField] private Projectile projectile;
+    [SerializeField] private Transform projectileSpawnPoint;
+    
     [SerializeField] private float fireCooldown = 0.5f;
     
     
@@ -39,11 +41,11 @@ public class Gun : NetworkBehaviour
     private void ShootServerRpc(Vector3 position, ServerRpcParams serverRpcParams = default)
     {
         var newProjectile = Instantiate(projectile, position, Quaternion.identity);
-        var no=  newProjectile.GetComponent<NetworkObject>();
-        no.SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
+        
+        newProjectile.NetworkObject.SpawnWithOwnership(serverRpcParams.Receive.SenderClientId);
         
         newProjectile.MoveClientRpc(transform.forward);
-        newProjectile.StartCoroutine(DestroyAfterTime(no));
+        newProjectile.StartCoroutine(DestroyAfterTime(newProjectile.NetworkObject));
     }
     
     

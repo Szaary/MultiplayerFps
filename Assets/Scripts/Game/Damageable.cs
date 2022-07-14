@@ -1,28 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Damageable : NetworkBehaviour
 {
-    [SerializeField] private float health = 100;
+    [SerializeField] private float maxHealth = 100;
+
+    private float _currentHealth;
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        Debug.Log("Health: " + health);
-        if (health <= 0)
+        _currentHealth -= damage;
+        Debug.Log("Health: " + _currentHealth);
+        if (_currentHealth <= 0)
         {
             Debug.Log("Dead");
-            if (IsServer || IsHost)
-            {
-                DespawnPlayer();
-            }
+            DespawnPlayer();
         }
     }
 
     private void DespawnPlayer()
     {
-        GetComponent<NetworkObject>().Despawn();
+        Debug.Log("Despawning player");
+        if (IsHost || IsServer)
+        {
+            Debug.Log("Despawning player object on server");
+            NetworkObject.Despawn();
+        }
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        _currentHealth = maxHealth;
     }
 }
