@@ -6,7 +6,6 @@ public class Projectile : NetworkBehaviour
     
     [SerializeField] private float speed = 5;
     
-    
     private bool canMove;
     private Vector3 _direction;
     

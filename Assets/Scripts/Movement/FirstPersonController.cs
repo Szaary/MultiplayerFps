@@ -125,7 +125,6 @@ namespace StarterAssets
             }
             else
             {
-                _controller.enabled = false;
                 _input.enabled = false;
                 _playerInput.enabled = false;
                 
