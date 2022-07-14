@@ -7,7 +7,7 @@ public class Gun : NetworkBehaviour
 {
     [SerializeField] private Projectile projectile;
     [SerializeField] private CameraController cameraController;
-    [SerializeField] private float fireCooldown = 0.5f;
+    [SerializeField] private float fireCooldown = 0.2f;
     
     
     private StarterAssetsInputs _input;
@@ -20,15 +20,16 @@ public class Gun : NetworkBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         if (cameraController.cameraTarget != null)
         {
             Debug.DrawRay(cameraController.cameraTarget.transform.position, cameraController.cameraTarget.transform.forward, Color.green);
         }
- 
+#endif
         if (!IsOwner) return;
         if (_input.shoot  && _shootTimeoutDelta <= 0.0f)
         {
-            var position = cameraController.cameraTarget.transform.position;
+            var position = cameraController.cameraTarget.transform.position+cameraController.cameraTarget.transform.forward;
             var direction = cameraController.cameraTarget.transform.forward;
             
             ShootServerRpc(position, direction);

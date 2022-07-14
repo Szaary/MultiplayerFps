@@ -1,8 +1,10 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Damageable : NetworkBehaviour
 {
+    public event Action<float, float> OnHealthChanged;
     [SerializeField] private float maxHealth = 100;
 
     private float _currentHealth;
@@ -11,6 +13,7 @@ public class Damageable : NetworkBehaviour
     {
         _currentHealth -= damage;
         Debug.Log("Health: " + _currentHealth);
+        OnHealthChanged?.Invoke(damage, _currentHealth);
         if (_currentHealth <= 0)
         {
             Debug.Log("Dead");
