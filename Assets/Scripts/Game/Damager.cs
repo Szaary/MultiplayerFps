@@ -18,7 +18,7 @@ public class Damager : NetworkBehaviour
                 return;
             }
 
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(damage, transform.position);
         }
     }
 }

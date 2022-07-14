@@ -24,6 +24,6 @@ public class UserInterfaceController : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        Destroy(userInterface.gameObject);
+        if(userInterface!=null) Destroy(userInterface.gameObject);
     }
 }

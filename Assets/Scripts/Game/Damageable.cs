@@ -6,14 +6,18 @@ public class Damageable : NetworkBehaviour
 {
     public event Action<float, float> OnHealthChanged;
     [SerializeField] private float maxHealth = 100;
-
+    [SerializeField] private ParticleSystem particle;
     private float _currentHealth;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Vector3 vector3)
     {
         _currentHealth -= damage;
         Debug.Log("Health: " + _currentHealth);
         OnHealthChanged?.Invoke(damage, _currentHealth);
+
+        var hitEffect = Instantiate(particle, vector3, Quaternion.identity);
+        hitEffect.Play();
+        
         if (_currentHealth <= 0)
         {
             Debug.Log("Dead");

@@ -321,8 +321,9 @@ MonoBehaviour:
   sprint: 0
   shoot: 0
   analogMovement: 0
-  cursorLocked: 0
+  cursorLocked: 1
   cursorInputForLook: 1
+  cursorVisible: 0
 --- !u!114 &8616685848737228376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +509,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  particle: {fileID: 1479964484530481496, guid: 44350b71c48a06a4abb668a235f61a10,
+    type: 3}
 --- !u!114 &7408041803931460508
 MonoBehaviour:
   m_ObjectHideFlags: 0
