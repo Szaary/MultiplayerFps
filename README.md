@@ -1,5 +1,4 @@
 # MultiplayerFpsTemplate
  Basic Multiplayer Functionality for Unity Fps Temlate
 
-
-#one day challange
+Game done in one day. 
